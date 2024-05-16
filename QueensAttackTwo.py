@@ -19,33 +19,79 @@ import sys
 #
 
 def queensAttack(n, k, r_q, c_q, obstacles):
-
-    # add all squares above, below, and to the sides
     count = 0
-    count += (n - 1) * 2
 
-    # add all diagonals
-    count += min(n - r_q, n - c_q)
-    count += min(r_q - 1, c_q - 1)
-    count += min(n - r_q, c_q - 1)
-    count += min(r_q - 1, n - c_q)
-        
-    for obstacle in obstacles:
-        r_o = obstacle[0]
-        c_o = obstacle[1]
+    # up
+    r = r_q + 1
+    while r <= n:
+        if [r, c_q] in obstacles:
+            break
+        count += 1
+        r += 1
 
-        # Check if the obstacle is in the same row, column, or diagonal as the queen
-        if r_o == r_q:
-            count -= abs(c_o - c_q) - 1  # Subtract the number of squares blocked in the same row
-        elif c_o == c_q:
-            count -= abs(r_o - r_q) - 1  # Subtract the number of squares blocked in the same column
-        elif abs(r_o - r_q) == abs(c_o - c_q):
-            count -= abs(r_o - r_q) - 1  # Subtract the number of squares blocked in the same diagonal
+    # down
+    r = r_q - 1
+    while r >= 1:
+        if [r, c_q] in obstacles:
+            break
+        count += 1
+        r -= 1
 
+    # left
+    c = c_q - 1
+    while c >= 1:
+        if [r_q, c] in obstacles:
+            break
+        count += 1
+        c -= 1
 
+    # right
+    c = c_q + 1
+    while c <= n:
+        if [r_q, c] in obstacles:
+            break
+        count += 1
+        c += 1
 
+    # up-right
+    r, c = r_q + 1, c_q + 1
+    while r <= n and c <= n:
+        if [r, c] in obstacles:
+            break
+        count += 1
+        r += 1
+        c += 1
+
+    # up-left
+    r, c = r_q + 1, c_q - 1
+    while r <= n and c >= 1:
+        if [r, c] in obstacles:
+            break
+        count += 1
+        r += 1
+        c -= 1
+
+    # down-right
+    r, c = r_q - 1, c_q + 1
+    while r >= 1 and c <= n:
+        if [r, c] in obstacles:
+            break
+        count += 1
+        r -= 1
+        c += 1
+
+    # down-left
+    r, c = r_q - 1, c_q - 1
+    while r >= 1 and c >= 1:
+        if [r, c] in obstacles:
+            break
+        count += 1
+        r -= 1
+        c -= 1
 
     return count
+    
+        
     
 
 
